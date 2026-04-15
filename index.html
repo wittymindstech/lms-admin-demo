@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LMS Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<div id="loginPage" class="flex items-center justify-center h-screen">
+  <div class="bg-white p-6 rounded shadow w-80">
+    <h2 class="text-xl font-bold mb-4">Admin Login</h2>
+    <input id="username" class="border p-2 w-full mb-3" placeholder="Username" />
+    <input id="password" type="password" class="border p-2 w-full mb-3" placeholder="Password" />
+    <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 w-full">Login</button>
+  </div>
+</div>
+
+<div id="dashboard" class="hidden p-6">
+  <h1 class="text-2xl font-bold mb-4">LMS Admin Panel</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Add Course</h2>
+      <input id="courseName" class="border p-2 w-full my-2" placeholder="Course Name" />
+      <input id="courseLink" class="border p-2 w-full my-2" placeholder="Course Link" />
+      <button onclick="addCourse()" class="bg-green-500 text-white px-3 py-1">Add</button>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Add Instructor</h2>
+      <input id="instructorName" class="border p-2 w-full my-2" placeholder="Instructor Name" />
+      <button onclick="addInstructor()" class="bg-green-500 text-white px-3 py-1">Add</button>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Add Notification</h2>
+      <input id="notificationText" class="border p-2 w-full my-2" placeholder="Notification" />
+      <button onclick="addNotification()" class="bg-green-500 text-white px-3 py-1">Add</button>
+    </div>
+  </div>
+
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Courses</h2>
+      <ul id="courseList"></ul>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Instructors</h2>
+      <ul id="instructorList"></ul>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="font-bold">Notifications</h2>
+      <ul id="notificationList"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    if (user === 'admin' && pass === 'admin123') {
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+    } else {
+      alert('Invalid credentials');
+    }
+  }
+
+  function addCourse() {
+    const name = document.getElementById('courseName').value;
+    const link = document.getElementById('courseLink').value;
+
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="${link}" target="_blank" class="text-blue-500">${name}</a>`;
+    document.getElementById('courseList').appendChild(li);
+  }
+
+  function addInstructor() {
+    const name = document.getElementById('instructorName').value;
+
+    const li = document.createElement('li');
+    li.textContent = name;
+    document.getElementById('instructorList').appendChild(li);
+  }
+
+  function addNotification() {
+    const text = document.getElementById('notificationText').value;
+
+    const li = document.createElement('li');
+    li.textContent = text;
+    document.getElementById('notificationList').appendChild(li);
+  }
+</script>
+
+</body>
+</html>
