@@ -2,59 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LMS Admin Panel</title>
+  <title>LMS Admin Panel (Demo)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-sans">
 
+<!-- LOGIN -->
 <div id="loginPage" class="flex items-center justify-center h-screen">
-  <div class="bg-white p-6 rounded shadow w-80">
-    <h2 class="text-xl font-bold mb-4">Admin Login</h2>
-    <input id="username" class="border p-2 w-full mb-3" placeholder="Username" />
-    <input id="password" type="password" class="border p-2 w-full mb-3" placeholder="Password" />
-    <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 w-full">Login</button>
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Admin Login</h2>
+    <input id="username" class="border p-2 w-full mb-3 rounded" placeholder="Username" />
+    <input id="password" type="password" class="border p-2 w-full mb-3 rounded" placeholder="Password" />
+    <button onclick="login()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 w-full rounded">Login</button>
   </div>
 </div>
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="hidden p-6">
-  <h1 class="text-2xl font-bold mb-4">LMS Admin Panel</h1>
+  <h1 class="text-3xl font-bold mb-6">LMS Admin Panel</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Add Course</h2>
-      <input id="courseName" class="border p-2 w-full my-2" placeholder="Course Name" />
-      <input id="courseLink" class="border p-2 w-full my-2" placeholder="Course Link" />
-      <button onclick="addCourse()" class="bg-green-500 text-white px-3 py-1">Add</button>
+  <!-- ADD SECTION -->
+  <div class="grid md:grid-cols-3 gap-4">
+
+    <!-- ADD COURSE -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-2">Add Course</h2>
+      <input id="courseName" class="border p-2 w-full my-2 rounded" placeholder="Course Name" />
+      <input id="courseLink" class="border p-2 w-full my-2 rounded" placeholder="YouTube Link" />
+      <button onclick="addCourse()" class="bg-green-600 text-white px-3 py-2 rounded w-full">Add Course</button>
     </div>
 
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Add Instructor</h2>
-      <input id="instructorName" class="border p-2 w-full my-2" placeholder="Instructor Name" />
-      <button onclick="addInstructor()" class="bg-green-500 text-white px-3 py-1">Add</button>
+    <!-- ADD INSTRUCTOR -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-2">Add Instructor</h2>
+      <input id="instructorName" class="border p-2 w-full my-1 rounded" placeholder="Name" />
+      <input id="instructorEmail" class="border p-2 w-full my-1 rounded" placeholder="Email" />
+      <input id="instructorPhone" class="border p-2 w-full my-1 rounded" placeholder="Phone" />
+      <input id="instructorExpertise" class="border p-2 w-full my-1 rounded" placeholder="Expertise" />
+      <input id="instructorBio" class="border p-2 w-full my-1 rounded" placeholder="Short Bio" />
+      <button onclick="addInstructor()" class="bg-green-600 text-white px-3 py-2 rounded w-full mt-2">Add Instructor</button>
     </div>
 
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Add Notification</h2>
-      <input id="notificationText" class="border p-2 w-full my-2" placeholder="Notification" />
-      <button onclick="addNotification()" class="bg-green-500 text-white px-3 py-1">Add</button>
+    <!-- ADD NOTIFICATION -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-2">Add Notification</h2>
+      <input id="notificationText" class="border p-2 w-full my-2 rounded" placeholder="Notification" />
+      <button onclick="addNotification()" class="bg-green-600 text-white px-3 py-2 rounded w-full">Add Notification</button>
     </div>
   </div>
 
-  <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Courses</h2>
-      <ul id="courseList"></ul>
+  <!-- DISPLAY SECTION -->
+  <div class="mt-6 grid md:grid-cols-3 gap-4">
+
+    <!-- COURSES -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-3">Recent Courses</h2>
+      <div id="courseList" class="space-y-3"></div>
     </div>
 
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Instructors</h2>
-      <ul id="instructorList"></ul>
+    <!-- INSTRUCTORS -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-3">Instructors</h2>
+      <div id="instructorList" class="space-y-3"></div>
     </div>
 
-    <div class="bg-white p-4 rounded shadow">
-      <h2 class="font-bold">Notifications</h2>
-      <ul id="notificationList"></ul>
+    <!-- NOTIFICATIONS -->
+    <div class="bg-white p-4 rounded-2xl shadow">
+      <h2 class="font-bold mb-3">Notifications</h2>
+      <ul id="notificationList" class="list-disc ml-5"></ul>
     </div>
   </div>
 </div>
@@ -67,34 +83,83 @@
     if (user === 'admin' && pass === 'admin123') {
       document.getElementById('loginPage').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
+      loadDemoCourses();
     } else {
       alert('Invalid credentials');
     }
   }
 
+  function extractYouTubeID(url) {
+    const regExp = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  }
+
   function addCourse() {
     const name = document.getElementById('courseName').value;
     const link = document.getElementById('courseLink').value;
+    const videoId = extractYouTubeID(link);
 
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="${link}" target="_blank" class="text-blue-500">${name}</a>`;
-    document.getElementById('courseList').appendChild(li);
+    if (!videoId) return alert('Invalid YouTube link');
+
+    const thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+
+    const div = document.createElement('div');
+    div.className = 'border rounded-lg p-2 flex gap-2 items-center';
+    div.innerHTML = `
+      <img src="${thumbnail}" class="w-20 h-14 rounded object-cover" />
+      <div>
+        <p class="font-semibold text-sm">${name}</p>
+        <a href="${link}" target="_blank" class="text-blue-500 text-xs">Watch</a>
+      </div>
+    `;
+
+    document.getElementById('courseList').prepend(div);
+  }
+
+  function loadDemoCourses() {
+    const demo = [
+      { name: 'Python Basics', link: 'https://www.youtube.com/watch?v=rfscVS0vtbw' },
+      { name: 'JavaScript Crash Course', link: 'https://www.youtube.com/watch?v=hdI2bqOjy3c' }
+    ];
+
+    demo.forEach(c => {
+      document.getElementById('courseName').value = c.name;
+      document.getElementById('courseLink').value = c.link;
+      addCourse();
+    });
+
+    document.getElementById('courseName').value = '';
+    document.getElementById('courseLink').value = '';
   }
 
   function addInstructor() {
     const name = document.getElementById('instructorName').value;
+    const email = document.getElementById('instructorEmail').value;
+    const phone = document.getElementById('instructorPhone').value;
+    const expertise = document.getElementById('instructorExpertise').value;
+    const bio = document.getElementById('instructorBio').value;
 
-    const li = document.createElement('li');
-    li.textContent = name;
-    document.getElementById('instructorList').appendChild(li);
+    const div = document.createElement('div');
+    div.className = 'border rounded-lg p-3 flex gap-3 items-start';
+    div.innerHTML = `
+      <div class="bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">👨‍🏫</div>
+      <div>
+        <p class="font-semibold">${name}</p>
+        <p class="text-xs">${email} | ${phone}</p>
+        <p class="text-xs text-gray-600">${expertise}</p>
+        <p class="text-xs italic">${bio}</p>
+      </div>
+    `;
+
+    document.getElementById('instructorList').prepend(div);
   }
 
   function addNotification() {
     const text = document.getElementById('notificationText').value;
-
     const li = document.createElement('li');
     li.textContent = text;
-    document.getElementById('notificationList').appendChild(li);
+    document.getElementById('notificationList').prepend(li);
   }
 </script>
 
