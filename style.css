@@ -1,7 +1,11 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f9;
+  background: #eef2f7;
   margin: 0;
+}
+
+.container {
+  padding: 20px;
 }
 
 .center {
@@ -12,11 +16,11 @@ body {
 }
 
 .card {
-  background: white;
+  background: #fff;
   padding: 20px;
   margin: 10px;
   border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   width: 300px;
 }
 
@@ -26,34 +30,49 @@ body {
   justify-content: center;
 }
 
+h1 {
+  text-align: center;
+}
+
 input {
   display: block;
   width: 100%;
   margin: 8px 0;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
 button {
   padding: 10px;
-  background: #007bff;
+  background: #2563eb;
   color: white;
   border: none;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #0056b3;
+  background: #1d4ed8;
 }
 
 .hidden {
   display: none;
 }
 
-img {
+.list div {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.course-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.course-card img {
+  width: 100px;
   border-radius: 8px;
-  margin-top: 5px;
 }
