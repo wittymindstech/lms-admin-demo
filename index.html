@@ -1,166 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LMS Admin Panel (Demo)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>LMS Admin Panel</title>
+
+<style>
+body { margin:0; font-family:Arial; background:#f5f7fb; }
+
+/* LOGIN */
+.center { display:flex; justify-content:center; align-items:center; height:100vh; }
+.login-box {
+  background:white; padding:30px; border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1); width:300px;
+}
+input, select {
+  width:100%; padding:10px; margin:8px 0;
+  border-radius:6px; border:1px solid #ccc;
+}
+button {
+  width:100%; padding:10px;
+  background:#2563eb; color:white;
+  border:none; border-radius:6px;
+}
+
+/* DASHBOARD */
+.layout { display:flex; }
+.sidebar {
+  width:220px; background:#1e293b; color:white;
+  height:100vh; padding:20px;
+}
+.sidebar li { list-style:none; padding:10px; cursor:pointer; }
+.sidebar li:hover { background:#334155; }
+
+.main { flex:1; padding:20px; }
+
+.topbar {
+  background:white; padding:15px; border-radius:10px;
+  margin-bottom:20px;
+}
+
+.stats {
+  display:flex; gap:15px; margin-bottom:20px;
+}
+.stat-card {
+  background:white; padding:15px;
+  border-radius:10px; flex:1;
+  text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card-grid {
+  display:flex; flex-wrap:wrap; gap:15px;
+}
+
+.card {
+  background:white; padding:10px;
+  border-radius:10px; width:250px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.badge {
+  background:#10b981; color:white;
+  padding:3px 6px; border-radius:5px;
+  font-size:12px;
+}
+
+iframe { width:100%; height:150px; border-radius:8px; }
+
+.hidden { display:none; }
+</style>
+
 </head>
-<body class="bg-gray-100 font-sans">
+<body>
 
 <!-- LOGIN -->
-<div id="loginPage" class="flex items-center justify-center h-screen">
-  <div class="bg-white p-6 rounded-2xl shadow-lg w-80">
-    <h2 class="text-xl font-bold mb-4 text-center">Admin Login</h2>
-    <input id="username" class="border p-2 w-full mb-3 rounded" placeholder="Username" />
-    <input id="password" type="password" class="border p-2 w-full mb-3 rounded" placeholder="Password" />
-    <button onclick="login()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 w-full rounded">Login</button>
+<div id="loginPage" class="center">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
   </div>
 </div>
 
+<!-- APP -->
+<div id="app" class="hidden">
+
+<div class="layout">
+
+<div class="sidebar">
+  <h2>🎓 LMS</h2>
+  <li onclick="showSection('dashboard')">Dashboard</li>
+  <li onclick="showSection('courses')">Courses</li>
+  <li onclick="showSection('instructors')">Instructors</li>
+  <li onclick="showSection('candidates')">Candidates</li>
+  <li onclick="showSection('notifications')">Notifications</li>
+  <li onclick="logout()">Logout</li>
+</div>
+
+<div class="main">
+
 <!-- DASHBOARD -->
-<div id="dashboard" class="hidden p-6">
-  <h1 class="text-3xl font-bold mb-6">LMS Admin Panel</h1>
+<div id="dashboard" class="section">
+  <div class="topbar"><h1>Dashboard</h1></div>
 
-  <!-- ADD SECTION -->
-  <div class="grid md:grid-cols-3 gap-4">
-
-    <!-- ADD COURSE -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-2">Add Course</h2>
-      <input id="courseName" class="border p-2 w-full my-2 rounded" placeholder="Course Name" />
-      <input id="courseLink" class="border p-2 w-full my-2 rounded" placeholder="YouTube Link" />
-      <button onclick="addCourse()" class="bg-green-600 text-white px-3 py-2 rounded w-full">Add Course</button>
+  <div class="stats">
+    <div class="stat-card">
+      <h3 id="totalInstructors">0</h3>
+      <p>Instructors</p>
     </div>
-
-    <!-- ADD INSTRUCTOR -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-2">Add Instructor</h2>
-      <input id="instructorName" class="border p-2 w-full my-1 rounded" placeholder="Name" />
-      <input id="instructorEmail" class="border p-2 w-full my-1 rounded" placeholder="Email" />
-      <input id="instructorPhone" class="border p-2 w-full my-1 rounded" placeholder="Phone" />
-      <input id="instructorExpertise" class="border p-2 w-full my-1 rounded" placeholder="Expertise" />
-      <input id="instructorBio" class="border p-2 w-full my-1 rounded" placeholder="Short Bio" />
-      <button onclick="addInstructor()" class="bg-green-600 text-white px-3 py-2 rounded w-full mt-2">Add Instructor</button>
-    </div>
-
-    <!-- ADD NOTIFICATION -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-2">Add Notification</h2>
-      <input id="notificationText" class="border p-2 w-full my-2 rounded" placeholder="Notification" />
-      <button onclick="addNotification()" class="bg-green-600 text-white px-3 py-2 rounded w-full">Add Notification</button>
+    <div class="stat-card">
+      <h3 id="totalCandidates">0</h3>
+      <p>Candidates</p>
     </div>
   </div>
+</div>
 
-  <!-- DISPLAY SECTION -->
-  <div class="mt-6 grid md:grid-cols-3 gap-4">
+<!-- COURSES -->
+<div id="courses" class="section hidden">
+  <h2>Add Course</h2>
+  <input id="courseName" placeholder="Course Name">
+  <input id="courseLink" placeholder="YouTube Link">
+  <button onclick="addCourse()">Add</button>
+  <div id="courseList" class="card-grid"></div>
+</div>
 
-    <!-- COURSES -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-3">Recent Courses</h2>
-      <div id="courseList" class="space-y-3"></div>
-    </div>
+<!-- INSTRUCTORS -->
+<div id="instructors" class="section hidden">
+  <h2>Add Instructor</h2>
+  <input id="instructorName" placeholder="Name">
+  <input id="instructorEmail" placeholder="Email">
+  <input id="instructorPhone" placeholder="Phone">
+  <input id="instructorExpertise" placeholder="Expertise">
+  <input id="instructorBio" placeholder="Short Bio">
+  <input id="instructorBadge" placeholder="Badge (optional)">
+  <button onclick="addInstructor()">Add</button>
+  <div id="instructorList" class="card-grid"></div>
+</div>
 
-    <!-- INSTRUCTORS -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-3">Instructors</h2>
-      <div id="instructorList" class="space-y-3"></div>
-    </div>
+<!-- CANDIDATES -->
+<div id="candidates" class="section hidden">
+  <h2>Add Candidate</h2>
+  <input id="candidateName" placeholder="Name">
+  <input id="candidateEmail" placeholder="Email">
+  <input id="candidateCourse" placeholder="Enrolled Course">
+  <input id="candidateBadge" placeholder="Badge (optional)">
+  <button onclick="addCandidate()">Add</button>
+  <div id="candidateList" class="card-grid"></div>
+</div>
 
-    <!-- NOTIFICATIONS -->
-    <div class="bg-white p-4 rounded-2xl shadow">
-      <h2 class="font-bold mb-3">Notifications</h2>
-      <ul id="notificationList" class="list-disc ml-5"></ul>
-    </div>
-  </div>
+<!-- NOTIFICATIONS -->
+<div id="notifications" class="section hidden">
+  <h2>Add Notification</h2>
+  <input id="notificationText" placeholder="Notification">
+  <button onclick="addNotification()">Add</button>
+  <ul id="notificationList"></ul>
+</div>
+
+</div>
+</div>
 </div>
 
 <script>
-  function login() {
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
+// LOGIN
+if(localStorage.getItem('loggedIn')) showApp();
 
-    if (user === 'admin' && pass === 'admin123') {
-      document.getElementById('loginPage').classList.add('hidden');
-      document.getElementById('dashboard').classList.remove('hidden');
-      loadDemoCourses();
-    } else {
-      alert('Invalid credentials');
-    }
-  }
+function login(){
+  if(username.value==='admin' && password.value==='admin123'){
+    localStorage.setItem('loggedIn',true);
+    showApp();
+  } else alert('Wrong');
+}
 
-  function extractYouTubeID(url) {
-    const regExp = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/;
-    const match = url.match(regExp);
-    return match ? match[1] : null;
-  }
+function logout(){
+  localStorage.removeItem('loggedIn');
+  location.reload();
+}
 
-  function addCourse() {
-    const name = document.getElementById('courseName').value;
-    const link = document.getElementById('courseLink').value;
-    const videoId = extractYouTubeID(link);
+function showApp(){
+  loginPage.classList.add('hidden');
+  app.classList.remove('hidden');
+  loadData();
+}
 
-    if (!videoId) return alert('Invalid YouTube link');
+// NAV
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
 
-    const thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+// YOUTUBE
+function getID(url){
+  let m=url.match(/(?:v=|be\/)([^&]+)/);
+  return m?m[1]:null;
+}
 
-    const div = document.createElement('div');
-    div.className = 'border rounded-lg p-2 flex gap-2 items-center';
-    div.innerHTML = `
-      <img src="${thumbnail}" class="w-20 h-14 rounded object-cover" />
-      <div>
-        <p class="font-semibold text-sm">${name}</p>
-        <a href="${link}" target="_blank" class="text-blue-500 text-xs">Watch</a>
-      </div>
-    `;
+// LOAD
+function loadData(){
+  JSON.parse(localStorage.getItem('courses')||'[]').forEach(renderCourse);
+  JSON.parse(localStorage.getItem('instructors')||'[]').forEach(renderInstructor);
+  JSON.parse(localStorage.getItem('candidates')||'[]').forEach(renderCandidate);
+  JSON.parse(localStorage.getItem('notifications')||'[]').forEach(renderNotification);
+  updateStats();
+}
 
-    document.getElementById('courseList').prepend(div);
-  }
+// STATS
+function updateStats(){
+  totalInstructors.innerText = JSON.parse(localStorage.getItem('instructors')||'[]').length;
+  totalCandidates.innerText = JSON.parse(localStorage.getItem('candidates')||'[]').length;
+}
 
-  function loadDemoCourses() {
-    const demo = [
-      { name: 'Python Basics', link: 'https://www.youtube.com/watch?v=rfscVS0vtbw' },
-      { name: 'JavaScript Crash Course', link: 'https://www.youtube.com/watch?v=hdI2bqOjy3c' }
-    ];
+// COURSE
+function addCourse(){
+  let id=getID(courseLink.value);
+  if(!id) return alert('Invalid link');
+  let obj={name:courseName.value,id};
+  let list=JSON.parse(localStorage.getItem('courses')||'[]');
+  list.unshift(obj);
+  localStorage.setItem('courses',JSON.stringify(list));
+  renderCourse(obj);
+}
 
-    demo.forEach(c => {
-      document.getElementById('courseName').value = c.name;
-      document.getElementById('courseLink').value = c.link;
-      addCourse();
-    });
+function renderCourse(c){
+  let div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`<h3>${c.name}</h3>
+  <iframe src="https://www.youtube.com/embed/${c.id}"></iframe>`;
+  courseList.prepend(div);
+}
 
-    document.getElementById('courseName').value = '';
-    document.getElementById('courseLink').value = '';
-  }
+// INSTRUCTOR
+function addInstructor(){
+  let obj={
+    name:instructorName.value,
+    email:instructorEmail.value,
+    phone:instructorPhone.value,
+    expertise:instructorExpertise.value,
+    bio:instructorBio.value,
+    badge:instructorBadge.value
+  };
+  let list=JSON.parse(localStorage.getItem('instructors')||'[]');
+  list.unshift(obj);
+  localStorage.setItem('instructors',JSON.stringify(list));
+  renderInstructor(obj);
+  updateStats();
+}
 
-  function addInstructor() {
-    const name = document.getElementById('instructorName').value;
-    const email = document.getElementById('instructorEmail').value;
-    const phone = document.getElementById('instructorPhone').value;
-    const expertise = document.getElementById('instructorExpertise').value;
-    const bio = document.getElementById('instructorBio').value;
+function renderInstructor(i){
+  let div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`👨‍🏫 <b>${i.name}</b><br>
+  ${i.email}<br>${i.phone}<br>
+  <small>${i.expertise}</small><br>
+  <i>${i.bio}</i><br>
+  ${i.badge ? `<span class='badge'>${i.badge}</span>`:''}`;
+  instructorList.prepend(div);
+}
 
-    const div = document.createElement('div');
-    div.className = 'border rounded-lg p-3 flex gap-3 items-start';
-    div.innerHTML = `
-      <div class="bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">👨‍🏫</div>
-      <div>
-        <p class="font-semibold">${name}</p>
-        <p class="text-xs">${email} | ${phone}</p>
-        <p class="text-xs text-gray-600">${expertise}</p>
-        <p class="text-xs italic">${bio}</p>
-      </div>
-    `;
+// CANDIDATE
+function addCandidate(){
+  let obj={
+    name:candidateName.value,
+    email:candidateEmail.value,
+    course:candidateCourse.value,
+    badge:candidateBadge.value
+  };
+  let list=JSON.parse(localStorage.getItem('candidates')||'[]');
+  list.unshift(obj);
+  localStorage.setItem('candidates',JSON.stringify(list));
+  renderCandidate(obj);
+  updateStats();
+}
 
-    document.getElementById('instructorList').prepend(div);
-  }
+function renderCandidate(c){
+  let div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`👨‍🎓 <b>${c.name}</b><br>
+  ${c.email}<br>
+  Course: ${c.course}<br>
+  ${c.badge ? `<span class='badge'>${c.badge}</span>`:''}`;
+  candidateList.prepend(div);
+}
 
-  function addNotification() {
-    const text = document.getElementById('notificationText').value;
-    const li = document.createElement('li');
-    li.textContent = text;
-    document.getElementById('notificationList').prepend(li);
-  }
+// NOTIFICATION
+function addNotification(){
+  let list=JSON.parse(localStorage.getItem('notifications')||'[]');
+  list.unshift(notificationText.value);
+  localStorage.setItem('notifications',JSON.stringify(list));
+  renderNotification(notificationText.value);
+}
+
+function renderNotification(t){
+  let li=document.createElement('li');
+  li.textContent=t;
+  notificationList.prepend(li);
+}
 </script>
 
 </body>
