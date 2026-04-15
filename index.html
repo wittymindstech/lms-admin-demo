@@ -7,7 +7,6 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginPage" class="center">
   <div class="card">
     <h2>Admin Login</h2>
@@ -17,12 +16,10 @@
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+<div id="dashboard" class="hidden container">
   <h1>LMS Admin Panel</h1>
 
   <div class="grid">
-    <!-- Add Course -->
     <div class="card">
       <h3>Add Course</h3>
       <input id="courseName" placeholder="Course Name" />
@@ -30,7 +27,6 @@
       <button onclick="addCourse()">Add</button>
     </div>
 
-    <!-- Add Instructor -->
     <div class="card">
       <h3>Add Instructor</h3>
       <input id="instructorName" placeholder="Name" />
@@ -41,7 +37,6 @@
       <button onclick="addInstructor()">Add</button>
     </div>
 
-    <!-- Add Notification -->
     <div class="card">
       <h3>Add Notification</h3>
       <input id="notificationText" placeholder="Notification" />
@@ -49,16 +44,15 @@
     </div>
   </div>
 
-  <!-- Lists -->
   <div class="grid">
     <div class="card">
       <h3>Courses</h3>
-      <div id="courseList"></div>
+      <div id="courseList" class="list"></div>
     </div>
 
     <div class="card">
       <h3>Instructors</h3>
-      <div id="instructorList"></div>
+      <div id="instructorList" class="list"></div>
     </div>
 
     <div class="card">
